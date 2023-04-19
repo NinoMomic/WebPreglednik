@@ -37,19 +37,33 @@ namespace WebPreglednik3.D
             webBrowser1.Navigate("Google.com");
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void txtBoxAdresa_KeyDown(object sender, KeyEventArgs e)
         {
-            listBox.Items.Add(webBrowser1.Url.ToString());
+            if(e.KeyCode == Keys.Enter)
+            {
+                webBrowser1.Navigate(txtBoxAdresa.Text);
+            }
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
+        private void bookmarksToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            listBox.Items.Clear();
+            ToolStripMenuItem bookmarkItem = new ToolStripMenuItem();
+            bookmarkItem.Text = txtBoxAdresa.Text;
+            bookmarkItem.Click += BookmarkItem_Click;
+            bookmarksToolStripMenuItem.DropDownItems.Add(bookmarkItem);
         }
 
-        private void listBox_Click(object sender, EventArgs e)
+        private void BookmarkItem_Click(object sender, EventArgs e)
         {
-            webBrowser1.Navigate(listBox.SelectedItems.ToString());
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            string url = item.Text;
+            webBrowser1.Navigate(url);
         }
+
+        private void btnAddBookmark_Click(object sender, EventArgs e)
+        {
+            bookmarksToolStripMenuItem_Click(sender, e);
+        }
+
     }
 }
